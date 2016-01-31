@@ -17,17 +17,27 @@
 #include <ht_platform.h>
 #include <ht_network.h>
 #include <ht_socketaddress.h>
+#include <ht_udpsocket.h>
+#include <ht_tcpsocket.h>
 #include <ht_string.h>
 
 namespace Hatchit {
 
     namespace Network {
 
+
+        enum SocketAddressFamily
+        {
+            INET = AF_INET,
+            INET6 = AF_INET6
+        };
+
         class HT_API SocketUtil
         {
         public:
             static SocketAddressPtr CreateIPv4Address(const std::string& address);
-            
+            static UDPSocketPtr     CreateUDPSocket(SocketAddressFamily family);   
+            static TCPSocketPtr     CreateTCPSocket(SocketAddressFamily family);
         };
 
     }

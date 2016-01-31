@@ -12,30 +12,33 @@
 **
 **/
 
+#pragma once
+
+#include <ht_platform.h>
 #include <ht_network.h>
-#include <ht_debug.h>
-#include <cstring>
+#include <ht_socketaddress.h>
+#include <memory>
 
 namespace Hatchit {
 
     namespace Network {
 
-        void ReportError(const char* err)
+        class HT_API UDPSocket
         {
-#ifdef HT_SYS_WINDOWS
+        public:
+            ~UDPSocket();
 
-#else
-            Core::DebugPrintF("%s. %s\n", err, strerror(errno));
-#endif
-        }
+            int Bind(const SocketAddress& address);
+            int SendTo(const void* data, int len, const SocketAddress& to);
+            int ReceiveFrom(void* buffer, int len, SocketAddress& from);
 
-        int LastError()
-        {
-#ifdef HT_SYS_WINDOWS
-            return 0;
-#else
-            return errno;
-#endif
-        }
+        private:
+            SOCKET m_socket;
+            
+            UDPSocket(SOCKET socket);
+
+            friend class SocketUtil;
+        };
+        typedef std::shared_ptr<UDPSocket> UDPSocketPtr;
     }
 }

@@ -23,6 +23,14 @@
 #include <netinet/in.h> //IPv4 functionality
 #include <arpa/inet.h>  //Address conversion
 #include <netdb.h>      //Name resolution
+#include <unistd.h>     
+#endif
+
+#ifndef HT_SYS_WINDOWS
+typedef int SOCKET;
+
+const int NO_ERROR = 0;
+const int INVALID_SOCKET = -1;
 #endif
 
 namespace Hatchit {
@@ -31,6 +39,9 @@ namespace Hatchit {
         
         HT_API
         void ReportError(const char* err);
+        
+        HT_API
+        int  LastError();
     }
 }
 

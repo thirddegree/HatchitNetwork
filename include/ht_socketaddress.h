@@ -25,7 +25,10 @@ namespace Hatchit {
         class HT_API SocketAddress
         {
         public:
-            SocketAddress(uint32_t address, uint16_t port, int family = AF_INET);
+            SocketAddress(hostent* host, uint16_t port);
+            SocketAddress(uint32_t address, uint16_t port);
+            SocketAddress(uint16_t port);
+            SocketAddress();
             SocketAddress(const sockaddr& sockAddr);
 
             size_t GetSize() const;
@@ -38,6 +41,9 @@ namespace Hatchit {
             const uint32_t&     GetIPv4Ref() const;
             sockaddr_in*        GetAsSockAddrIn();
             const sockaddr_in*  GetAsSockAddrIn() const;
+
+            friend class UDPSocket;
+            friend class TCPSocket;
         };
         typedef std::shared_ptr<SocketAddress> SocketAddressPtr;
     }

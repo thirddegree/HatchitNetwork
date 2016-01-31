@@ -67,5 +67,34 @@ namespace Hatchit {
 
             return retVal;
         }
+
+        UDPSocketPtr SocketUtil::CreateUDPSocket(SocketAddressFamily family)
+        {
+            SOCKET sock = socket(family, SOCK_DGRAM, IPPROTO_UDP);
+            if(sock == INVALID_SOCKET)
+            {
+#ifdef _DEBUG
+                ReportError("SocketUtil::CreateUDPSocket");
+#endif
+                return nullptr;
+            }
+
+            return UDPSocketPtr(new UDPSocket(sock));
+        }
+
+        TCPSocketPtr SocketUtil::CreateTCPSocket(SocketAddressFamily family)
+        {
+            SOCKET sock = socket(family, SOCK_STREAM, IPPROTO_TCP);
+            if(sock == INVALID_SOCKET)
+            {
+#ifdef _DEBUG
+               ReportError("SocketUtil::CreateTCPSocket");
+#endif
+               return nullptr;
+            }
+
+            return TCPSocketPtr(new TCPSocket(sock));
+        }
+
     }
 }
