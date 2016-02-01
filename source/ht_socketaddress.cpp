@@ -52,7 +52,7 @@ namespace Hatchit {
         SocketAddress::SocketAddress(const sockaddr& sockAddr)
         {
 #ifdef HT_SYS_WINDOWS
-            std::memcpy_s(&m_sockAddr, sizeof(sockaddr), &sockAddr, sizeof(sockaddr));
+            memcpy_s(&m_sockAddr, sizeof(sockaddr), &sockAddr, sizeof(sockaddr));
 #else
             std::memcpy(&m_sockAddr, &sockAddr, sizeof(sockaddr));
 #endif

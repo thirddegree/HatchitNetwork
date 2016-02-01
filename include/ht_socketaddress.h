@@ -1,4 +1,4 @@
-/**
+/*
 **    Hatchit Engine
 **    Copyright(c) 2015 Third-Degree
 **
@@ -17,6 +17,10 @@
 #include <ht_platform.h>
 #include <ht_network.h>
 #include <memory>
+#ifdef HT_SYS_WINDOWS
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#endif
 
 namespace Hatchit {
 
