@@ -36,12 +36,6 @@ namespace Hatchit {
                 service = "0";
             }
 
-#ifdef HT_SYS_WINDOWS
-			//TODO: Flesh this out; this is a VERY basic initialization
-			WSADATA wsaData;
-			WSAStartup(0x202, &wsaData);
-#endif
-
             addrinfo hint;
             std::memset(&hint, 0, sizeof(addrinfo));
             hint.ai_family = AF_INET; //IPv4 family

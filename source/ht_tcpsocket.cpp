@@ -34,7 +34,7 @@ namespace Hatchit {
 
         int TCPSocket::Connect(const SocketAddress& address)
         {
-            int error = connect(m_socket, &address.m_sockAddr, address.GetSize());
+            int error = WSAConnect(m_socket, &address.m_sockAddr, address.GetSize(), NULL, NULL, NULL, NULL); //connect(m_socket, &address.m_sockAddr, address.GetSize());
             if(error < 0)
             {
 #ifdef _DEBUG

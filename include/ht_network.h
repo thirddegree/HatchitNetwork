@@ -18,6 +18,7 @@
 
 #ifdef HT_SYS_WINDOWS
 #include <Winsock2.h>   //WIN32 Socket API
+#include <ws2tcpip.h>
 #else
 #include <sys/socket.h> //POSIX Socket API
 #include <netinet/in.h> //IPv4 functionality
@@ -42,6 +43,12 @@ namespace Hatchit {
         
         HT_API
         int  LastError();
+
+        HT_API
+        bool  Initialize();
+
+        HT_API
+        void  Shutdown();
     }
 }
 

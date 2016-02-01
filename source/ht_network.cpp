@@ -23,7 +23,19 @@ namespace Hatchit {
         void ReportError(const char* err)
         {
 #ifdef HT_SYS_WINDOWS
+            LPVOID msgBuffer;
+            DWORD errorNum = WSAGetLastError();
 
+            FormatMessageA(
+                FORMAT_MESSAGE_ALLOCATE_BUFFER |
+                FORMAT_MESSAGE_FROM_SYSTEM |
+                FORMAT_MESSAGE_IGNORE_INSERTS,
+                NULL,
+                errorNum,
+                MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                (LPSTR)&msgBuffer,
+                0, NULL);
+            Core::DebugPrintF("%s. %s\n", err, msgBuffer);
 #else
             Core::DebugPrintF("%s. %s\n", err, strerror(errno));
 #endif
@@ -35,6 +47,35 @@ namespace Hatchit {
             return 0;
 #else
             return errno;
+#endif
+        }
+
+        bool Initialize()
+        {
+#ifdef HT_SYS_WINDOWS
+            WSADATA wsaData;
+            int result = WSAStartup(WINSOCK_VERSION, &wsaData);
+            if (result != NO_ERROR)
+            {
+#ifdef _DEBUG
+                ReportError("Network::Initialize Failed.");
+#endif
+                return false;
+            }
+#endif
+            return true;
+        }
+
+        void Shutdown()
+        {
+#ifdef HT_SYS_WINDOWS
+            int result = WSACleanup();
+            if (result != NO_ERROR)
+            {
+#ifdef _DEBUG
+                ReportError("Network::Shutdown Failed.");
+#endif
+            }
 #endif
         }
     }
