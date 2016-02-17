@@ -34,7 +34,7 @@ namespace Hatchit {
 
         int UDPSocket::Bind(const SocketAddress& address)
         {
-            int error = bind(m_socket, &address.m_sockAddr, address.GetSize());
+			int error = bind(m_socket, &address.m_sockAddr, (int)address.GetSize());
             if(error != 0)
             {
 #ifdef _DEBUG
@@ -48,7 +48,7 @@ namespace Hatchit {
 
         int UDPSocket::SendTo(const void* data, int len, const SocketAddress& to)
         {
-            int byteCount = sendto(m_socket, static_cast<const char*>(data), len, 0, &to.m_sockAddr, to.GetSize());
+			int byteCount = sendto(m_socket, static_cast<const char*>(data), len, 0, &to.m_sockAddr, (int)to.GetSize());
             if(byteCount < 0)
             {
 #ifdef _DEBUG
@@ -62,7 +62,7 @@ namespace Hatchit {
 
         int UDPSocket::ReceiveFrom(void* buffer, int len, SocketAddress& from)
         {
-            socklen_t fromLen = from.GetSize();
+            socklen_t fromLen = (socklen_t)from.GetSize();
             int byteCount = recvfrom(m_socket, static_cast<char*>(buffer), len, 0, &from.m_sockAddr, &fromLen);
             if(byteCount < 0)
             {
