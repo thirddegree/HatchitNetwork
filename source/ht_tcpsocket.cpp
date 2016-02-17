@@ -34,7 +34,7 @@ namespace Hatchit {
 
         int TCPSocket::Connect(const SocketAddress& address)
         {
-            int error = connect(m_socket, &address.m_sockAddr, (int)address.GetSize());
+            int error = connect(m_socket, &address.m_sockAddr, static_cast<int>(address.GetSize()));
             if(error < 0)
             {
 #ifdef _DEBUG
@@ -49,7 +49,7 @@ namespace Hatchit {
 
         int TCPSocket::Bind(const SocketAddress& address)
         {
-			int error = bind(m_socket, &address.m_sockAddr, (int)address.GetSize());
+            int error = bind(m_socket, &address.m_sockAddr, static_cast<int>(address.GetSize()));
             if(error != 0)
             {
 #ifdef _DEBUG
@@ -78,7 +78,7 @@ namespace Hatchit {
 
         TCPSocketPtr TCPSocket::Accept(SocketAddress& address)
         {
-            socklen_t length = (socklen_t)address.GetSize();
+            socklen_t length = static_cast<socklen_t>(address.GetSize());
             SOCKET newSocket = accept(m_socket, &address.m_sockAddr, &length);
             if(newSocket == INVALID_SOCKET)
             {
