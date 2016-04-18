@@ -46,7 +46,7 @@ namespace Hatchit {
             if(error != 0 && result != nullptr)
             {
 #ifdef _DEBUG
-                Core::DebugPrintF("ERROR: IPv4FromString failed: %s\n", strerror(errno));
+                HT_ERROR_PRINTF("ERROR: IPv4FromString failed: %s\n", strerror(errno));
 #endif              
                 freeaddrinfo(result);
                 return nullptr;
