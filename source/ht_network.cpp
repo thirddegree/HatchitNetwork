@@ -35,9 +35,9 @@ namespace Hatchit {
                 MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
                 (LPSTR)&msgBuffer,
                 0, NULL);
-            Core::DebugPrintF("%s. %s\n", err, msgBuffer);
+            HT_ERROR_PRINTF("%s. %s\n", err, msgBuffer);
 #else
-            Core::DebugPrintF("%s. %s\n", err, strerror(errno));
+            HT_ERROR_PRINTF("%s. %s\n", err, strerror(errno));
 #endif
         }
 
