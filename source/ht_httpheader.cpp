@@ -12,8 +12,6 @@
 **
 **/
 
-#pragma once
-
 #include <ht_httpheader.h>    //HTTPHeader
 
 namespace Hatchit
