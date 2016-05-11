@@ -14,8 +14,9 @@
 
 #pragma once
 
-#include <ht_platform.h>
-#include <ht_string.h>
+#include <ht_platform.h>            //HT_API
+#include <ht_string.h>              //std::string
+#include <ht_httprequestheader.h>   //HTTPRequestHeader
 
 namespace Hatchit
 {
@@ -30,21 +31,30 @@ namespace Hatchit
                 POST
             };
 
-            HTTPRequest(Type type, std::string address);
+            HTTPRequest(Type type, std::string url);
+            HTTPRequest(Type type, std::string url, uint32_t port);
             ~HTTPRequest();
 
-            void SetHeader(std::string header);
+            void SetHeader(HTTPRequestHeader header);
             void SetBody(std::string body);
 
-            std::string GetAddress() const;
-            std::string GetHeader() const;
+            std::string GetHostname() const;
+            std::string GetHeader();
+            uint32_t    GetPort() const;
             std::string GetBody() const;
 
         private:
-            Type m_type;
-            std::string m_address;
-            std::string m_header;
+            Type        m_type;
+            std::string m_url;
+            std::string m_hostname;
+            std::string m_uri;
+            uint32_t    m_port;
+
+            HTTPRequestHeader  m_header;
             std::string m_body;
+
+            std::string getHostnameFromURL(std::string url);
+            std::string getURIFromURL(std::string url);
         };
     }
 }

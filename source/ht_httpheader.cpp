@@ -14,27 +14,29 @@
 
 #pragma once
 
-#include <ht_platform.h>
-#include <ht_string.h>
-#include <ht_httprequest.h>
-#include <ht_httpresponse.h>
-#include <ht_socketutil.h>
+#include <ht_httpheader.h>    //HTTPHeader
 
 namespace Hatchit
 {
     namespace Network
     {
-        class HT_API HTTP 
+        std::string HTTPHeader::GetHeaderString()
         {
-        public:
-            static bool GET(std::string address, HTTPResponse& response);
-            static bool POST(std::string address, std::string body, std::string& returnBody);
+            std::string header;
 
-        private:
-            static bool SubmitRequest(HTTPRequest request, HTTPResponse& response);
+            for (auto it = m_parameters.begin(); it != m_parameters.end(); it++)
+            {
+                header.append(it->first);
+                header.append(":");
 
-            static SocketAddressPtr m_address;
-            static TCPSocketPtr     m_socket;
-        };
+                header.append(it->second);
+                header.append("\r\n");
+            }
+
+            //Append an extra newline to mark the end of the file
+            header.append("\r\n");
+
+            return header;
+        }
     }
 }

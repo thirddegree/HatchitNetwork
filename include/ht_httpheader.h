@@ -14,27 +14,21 @@
 
 #pragma once
 
-#include <ht_platform.h>
-#include <ht_string.h>
-#include <ht_httprequest.h>
-#include <ht_httpresponse.h>
-#include <ht_socketutil.h>
+#include <ht_platform.h>    //HT_API
+#include <ht_string.h>      //std::string
+#include <map>              //std::map
 
 namespace Hatchit
 {
     namespace Network
     {
-        class HT_API HTTP 
+        class HT_API HTTPHeader
         {
         public:
-            static bool GET(std::string address, HTTPResponse& response);
-            static bool POST(std::string address, std::string body, std::string& returnBody);
+            std::string GetHeaderString();
 
-        private:
-            static bool SubmitRequest(HTTPRequest request, HTTPResponse& response);
-
-            static SocketAddressPtr m_address;
-            static TCPSocketPtr     m_socket;
+        protected:
+            std::map<std::string, std::string> m_parameters;
         };
     }
 }

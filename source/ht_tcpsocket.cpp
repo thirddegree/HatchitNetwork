@@ -107,7 +107,8 @@ namespace Hatchit {
 
         int TCPSocket::Receive(void* buffer, int len)
         {
-            int byteCount = recv(m_socket, static_cast<char*>(buffer), len, 0);
+            char* charBuffer = static_cast<char*>(buffer);
+            int byteCount = recv(m_socket, charBuffer, len, 0);
             if(byteCount < 0)
             {
 #ifdef _DEBUG
@@ -115,6 +116,9 @@ namespace Hatchit {
 #endif
                 return -LastError();
             }
+
+            //recv won't null terminate the string
+            charBuffer[byteCount] = '\0';
 
             return byteCount;
         }
