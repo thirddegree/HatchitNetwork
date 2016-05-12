@@ -95,8 +95,6 @@ namespace Hatchit
             }
 
             response.ParseResponse(rawResponse);
-
-            std::cout << response.GetBody() << std::endl;
             
             return true;
         }
