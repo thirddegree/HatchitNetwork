@@ -28,6 +28,8 @@ namespace Hatchit
         {
         public:
             static bool GET(std::string address, HTTPResponse& response);
+            static bool GET(std::string address, HTTPRequestHeader header, HTTPResponse& response);
+
             static bool POST(std::string address, std::string body, std::string& returnBody);
 
         private:

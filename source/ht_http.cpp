@@ -13,6 +13,7 @@
 **/
 
 #include <ht_http.h>
+#include <ht_debug.h>
 #include <iterator>
 #include <iostream>
 
@@ -33,6 +34,14 @@ namespace Hatchit
 
             return SubmitRequest(request, response);
         }
+        bool HTTP::GET(std::string address, HTTPRequestHeader header, HTTPResponse& response)
+        {
+            HTTPRequest request(HTTPRequest::Type::GET, address);
+            request.SetHeader(header);
+
+            return SubmitRequest(request, response);
+        }
+
         bool HTTP::POST(std::string address, std::string body, std::string& returnBody)
         {
             return true;
@@ -45,6 +54,11 @@ namespace Hatchit
             uint32_t port = request.GetPort();
 
             hostent* h = gethostbyname(hostname.c_str());
+            if (!h)
+            {
+                HT_ERROR_PRINTF("Failed to resolve hostname\n");
+                return false;
+            }
             char* addr = inet_ntoa(*((struct in_addr *) h->h_addr_list[0]));
 
             std::string ip = std::string(addr);
@@ -68,7 +82,7 @@ namespace Hatchit
             if (m_socket->Send(packet.c_str(), static_cast<int>(packet.size())) < 0)
                 return false;
 
-            //Recieve data in 50 byte chunks until we've parsed as far as we need to in order to learn the buffer size
+            //Recieve data in 100 byte chunks until we've parsed as far as we need to in order to learn the buffer size
             std::string rawResponse;
             size_t responseSize = 0;
             size_t bodySize = 0;
