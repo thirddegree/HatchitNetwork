@@ -14,31 +14,29 @@
 
 #pragma once
 
-#include <ht_platform.h>
-#include <ht_network.h>
-#include <ht_socketaddress.h>
-#include <memory>
+#include <ht_platform.h>            //HT_API
+#include <ht_httpresponseheader.h>  //HTTPResponseHeader
+#include <ht_string.h>              //std::string
 
-namespace Hatchit {
-
-    namespace Network {
-
-        class HT_API UDPSocket
+namespace Hatchit 
+{
+    namespace Network 
+    {
+        class HT_API HTTPResponse 
         {
         public:
-            ~UDPSocket();
+            HTTPResponse();
 
-            int Bind(const SocketAddress& address);
-            int SendTo(const void* data, int len, const SocketAddress& to);
-            int ReceiveFrom(void* buffer, int len, SocketAddress& from);
+            bool ParseResponse(std::string rawResponse);
+
+            HTTPResponseHeader GetHeader() const;
+            std::string GetBody() const;
 
         private:
-            SOCKET m_socket;
-            
-            UDPSocket(SOCKET socket);
+            HTTPResponseHeader m_header;
+            std::string m_body;
 
-            friend class SocketUtil;
+            void parseHeader(std::string rawHeader);
         };
-        typedef std::shared_ptr<UDPSocket> UDPSocketPtr;
     }
 }

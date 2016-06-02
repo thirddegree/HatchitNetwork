@@ -1,6 +1,6 @@
 /**
 **    Hatchit Engine
-**    Copyright(c) 2015 Third-Degree
+**    Copyright(c) 2015-2016 Third-Degree
 **
 **    GNU Lesser General Public License
 **    This file may be used under the terms of the GNU Lesser
@@ -45,9 +45,7 @@ namespace Hatchit {
 
             if(error != 0 && result != nullptr)
             {
-#ifdef _DEBUG
-                HT_ERROR_PRINTF("ERROR: IPv4FromString failed: %s\n", strerror(errno));
-#endif              
+                HT_ERROR_PRINTF("IPv4FromString failed: %s\n", strerror(errno));         
                 freeaddrinfo(result);
                 return nullptr;
             }
