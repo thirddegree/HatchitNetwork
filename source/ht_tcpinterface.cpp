@@ -58,21 +58,26 @@ namespace Hatchit
             /**
              * Define update thread
              */
-            m_update = std::thread([](TCPInterface* _interface){
+            m_update = std::thread([this](){
                 while(true)
                 {
-                    TCPSocketPtr _newConnection = _interface->m_listen->Accept();
+                    TCPSocketPtr _newConnection = this->m_listen->Accept();
                     if(_newConnection)
                     {
                         RemoteClientPtr _client = std::make_shared<RemoteClient>();
                         _client->SetSocket(_newConnection);
-                        _interface->m_clients.push(_client);
+                        this->m_clients.push(_client);
 
-                        for(auto& plugin : _interface->m_plugins)
+                        for(auto& plugin : this->m_plugins)
                             plugin->OnAcceptConnection(_newConnection->GetAddress());
+
+
+                        std::string message = "Hello";
+                        _newConnection->Send(message.data(), message.size());
+
                     }
                 }
-            }, this);
+            });
             m_update.join();
 
             return true;

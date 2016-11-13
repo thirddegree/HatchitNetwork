@@ -13,6 +13,7 @@
 **/
 
 #include <ht_tcpsocket.h>
+#include <ht_debug.h>
 
 namespace Hatchit {
 
@@ -39,6 +40,7 @@ namespace Hatchit {
 #ifdef HT_SYS_WINDOWS
             closesocket(m_socket);
 #else
+            HT_DEBUG_PRINTF("Closing socket.\n");
             close(m_socket);
 #endif
         }
@@ -101,10 +103,10 @@ namespace Hatchit {
 #endif
                 return nullptr;
             }
-            TCPSocketPtr _new = std::make_shared<TCPSocket>(TCPSocket(newSocket));
-            _new->m_address = _newAddress;
+            TCPSocket* socket = new TCPSocket(newSocket);
+            socket->m_address = _newAddress;
 
-            return _new;
+            return TCPSocketPtr(socket);
         }
 
         int TCPSocket::Send(const void* data, int len)
