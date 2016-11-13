@@ -12,28 +12,20 @@
 **
 **/
 
-#include <ht_platform.h>
-#include <ht_network.h>
-#include <ht_socketaddress.h>
+#include <ht_packet.h>
 
 namespace Hatchit
 {
     namespace Network
     {
-        class HT_API Packet
+        Packet::Packet()
         {
-        public:
-            Packet();
 
-            ~Packet();
+        }
 
+        Packet::~Packet()
+        {
 
-        private:
-            SocketAddress m_address;
-            BYTE*         m_data;
-            uint32_t      m_length;
-
-            bool m_local;
-        };
+        }
     }
 }

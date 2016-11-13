@@ -109,9 +109,9 @@ namespace Hatchit {
             return TCPSocketPtr(socket);
         }
 
-        int TCPSocket::Send(const void* data, int len)
+        int TCPSocket::Send(const void* data, int len, int flags)
         {
-            int byteCount = send(m_socket, static_cast<const char*>(data), len, 0);
+            int byteCount = send(m_socket, static_cast<const char*>(data), len, flags);
             if(byteCount < 0)
             {
 #ifdef _DEBUG
@@ -123,10 +123,10 @@ namespace Hatchit {
             return byteCount;
         }
 
-        int TCPSocket::Receive(void* buffer, int len)
+        int TCPSocket::Receive(void* buffer, int len, int flags)
         {
             char* charBuffer = static_cast<char*>(buffer);
-            int byteCount = recv(m_socket, charBuffer, len, 0);
+            int byteCount = recv(m_socket, charBuffer, len, flags);
             if(byteCount < 0)
             {
 #ifdef _DEBUG
