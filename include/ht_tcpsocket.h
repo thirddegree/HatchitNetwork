@@ -37,7 +37,7 @@ namespace Hatchit {
             int                         Connect(const SocketAddress& address);
             int                         Bind(const SocketAddress& address);
             int                         Listen(int backlog = DEF_LISTEN_BACKLOG);
-            std::shared_ptr<TCPSocket>  Accept(SocketAddress& address);
+            std::shared_ptr<TCPSocket>  Accept();
             int                         Send(const void* data, int len);
             int                         Receive(void* buffer, int len);
 

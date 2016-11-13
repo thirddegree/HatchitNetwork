@@ -89,10 +89,11 @@ namespace Hatchit {
             return NO_ERROR;
         }
 
-        TCPSocketPtr TCPSocket::Accept(SocketAddress& address)
+        TCPSocketPtr TCPSocket::Accept()
         {
-            socklen_t length = static_cast<socklen_t>(address.GetSize());
-            SOCKET newSocket = accept(m_socket, &address.m_sockAddr, &length);
+            socklen_t length = static_cast<socklen_t>(sizeof(sockaddr));
+            SocketAddress _newAddress;
+            SOCKET newSocket = accept(m_socket, &_newAddress.m_sockAddr, &length);
             if(newSocket == INVALID_SOCKET)
             {
 #ifdef _DEBUG
@@ -100,7 +101,6 @@ namespace Hatchit {
 #endif
                 return nullptr;
             }
-            SocketAddress _newAddress = address;
             TCPSocketPtr _new = std::make_shared<TCPSocket>(TCPSocket(newSocket));
             _new->m_address = _newAddress;
 
