@@ -90,7 +90,9 @@ namespace Hatchit {
 
         std::string SocketAddress::ToString() const
         {
-            return inet_ntoa(GetAsSockAddrIn()->sin_addr);
+            std::string s = inet_ntoa(GetAsSockAddrIn()->sin_addr);
+            s += ":" + std::to_string(ntohs(GetAsSockAddrIn()->sin_port));
+            return s;
         }
         
         uint32_t& SocketAddress::GetIPv4Ref()
