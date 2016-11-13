@@ -12,29 +12,20 @@
 **
 **/
 
-#include <ht_platform.h>
-#include <ht_tcpsocket.h>
-#include <ht_socketaddress.h>
-#include <memory>
+#include <ht_tcpprocessplugin.h>
 
 namespace Hatchit
 {
     namespace Network
     {
-        class HT_API RemoteClient
+        TCPProcessPlugin::TCPProcessPlugin()
         {
-        public:
-            RemoteClient();
 
-            ~RemoteClient();
+        }
 
-            void SetSocket(TCPSocketPtr socket);
+        TCPProcessPlugin::~TCPProcessPlugin()
+        {
 
-            const TCPSocketPtr& GetSocket() const;
-        private:
-            SocketAddress       m_address;
-            TCPSocketPtr        m_socket;
-        };
-        typedef std::shared_ptr<RemoteClient> RemoteClientPtr;
+        }
     }
 }

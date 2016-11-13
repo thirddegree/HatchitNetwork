@@ -13,28 +13,34 @@
 **/
 
 #include <ht_platform.h>
-#include <ht_tcpsocket.h>
-#include <ht_socketaddress.h>
+#include <ht_network.h>
 #include <memory>
 
 namespace Hatchit
 {
     namespace Network
     {
-        class HT_API RemoteClient
+        class SocketAddress;
+        class Packet;
+        class TCPInterface;
+
+        class TCPProcessPlugin
         {
         public:
-            RemoteClient();
+            TCPProcessPlugin();
 
-            ~RemoteClient();
+            virtual ~TCPProcessPlugin();
 
-            void SetSocket(TCPSocketPtr socket);
+            virtual void OnAttach() = 0;
+            virtual void OnDetach() = 0;
+            virtual void OnUpdate() = 0;
+            virtual void OnReceive(std::shared_ptr<Packet>& packet) = 0;
 
-            const TCPSocketPtr& GetSocket() const;
+            virtual void OnAcceptConnection(const SocketAddress& address) = 0;
+            virtual void OnFailedConnection() = 0;
+
         private:
-            SocketAddress       m_address;
-            TCPSocketPtr        m_socket;
+            std::shared_ptr<TCPInterface> m_parent;
         };
-        typedef std::shared_ptr<RemoteClient> RemoteClientPtr;
     }
 }
