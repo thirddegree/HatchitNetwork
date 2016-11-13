@@ -16,8 +16,8 @@
 
 #include <ht_platform.h>
 #include <ht_network.h>
+#include <ht_string.h>
 #include <memory>
-
 
 namespace Hatchit {
 
