@@ -87,6 +87,11 @@ namespace Hatchit {
         {
             return sizeof(sockaddr);
         }
+
+        std::string SocketAddress::ToString() const
+        {
+            return inet_ntoa(GetAsSockAddrIn()->sin_addr);
+        }
         
         uint32_t& SocketAddress::GetIPv4Ref()
         {

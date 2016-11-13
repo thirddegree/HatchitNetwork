@@ -40,8 +40,12 @@ namespace Hatchit {
             std::shared_ptr<TCPSocket>  Accept(SocketAddress& address);
             int                         Send(const void* data, int len);
             int                         Receive(void* buffer, int len);
+
+            const SocketAddress& GetAddress() const;
+
         private:
-            SOCKET m_socket;
+            SocketAddress m_address;
+            SOCKET        m_socket;
 
             friend class SocketUtil;
         };

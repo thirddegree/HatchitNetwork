@@ -36,6 +36,8 @@ namespace Hatchit {
             size_t GetSize() const;
 
             bool operator== (const SocketAddress& other) const;
+
+            std::string ToString() const;
         private:
             sockaddr m_sockAddr;
 

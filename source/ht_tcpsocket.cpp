@@ -53,6 +53,7 @@ namespace Hatchit {
 #endif
                 return -LastError();
             }
+            m_address = address;
 
             return NO_ERROR;
         }
@@ -68,6 +69,7 @@ namespace Hatchit {
 #endif
                 return LastError();
             }
+            m_address = address;
 
             return NO_ERROR;
         }
@@ -98,8 +100,11 @@ namespace Hatchit {
 #endif
                 return nullptr;
             }
+            SocketAddress _newAddress = address;
+            TCPSocketPtr _new = std::make_shared<TCPSocket>(TCPSocket(newSocket));
+            _new->m_address = _newAddress;
 
-            return TCPSocketPtr(new TCPSocket(newSocket));
+            return _new;
         }
 
         int TCPSocket::Send(const void* data, int len)
@@ -132,6 +137,11 @@ namespace Hatchit {
             charBuffer[byteCount] = '\0';
 
             return byteCount;
+        }
+
+        const SocketAddress& TCPSocket::GetAddress() const
+        {
+            return m_address;
         }
     }
 }
