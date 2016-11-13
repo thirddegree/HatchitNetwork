@@ -18,6 +18,17 @@ namespace Hatchit {
 
     namespace Network {
 
+        TCPSocket::TCPSocket()
+        {
+            m_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+            if(m_socket == INVALID_SOCKET)
+            {
+#ifdef _DEBUG
+                ReportError("TCPSocket::TCPSocket");
+#endif
+            }
+        }
+
         TCPSocket::TCPSocket(SOCKET socket)
         {
             m_socket = socket;

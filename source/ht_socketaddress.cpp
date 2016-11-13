@@ -19,12 +19,25 @@
 namespace Hatchit {
 
     namespace Network {
-       
+
+        SocketAddress::SocketAddress()
+        {
+            GetAsSockAddrIn()->sin_family = AF_INET;
+            GetIPv4Ref() = INADDR_ANY;
+            GetAsSockAddrIn()->sin_port = 0;
+        }
+
+        SocketAddress::SocketAddress(const char* address, uint16_t port)
+        {
+            GetAsSockAddrIn()->sin_family = AF_INET;
+            inet_pton(AF_INET, address, &GetIPv4Ref());
+            GetAsSockAddrIn()->sin_port = htons(port);
+        }
 
         SocketAddress::SocketAddress(hostent* host, uint16_t port)
         {
             GetAsSockAddrIn()->sin_family = AF_INET;
-            memcpy(host->h_addr, reinterpret_cast<void*>(&GetAsSockAddrIn()->sin_addr.s_addr), host->h_length);
+            std::memcpy(host->h_addr, reinterpret_cast<void*>(&GetIPv4Ref()), host->h_length);
             GetAsSockAddrIn()->sin_port = htons(port);
         }
 
@@ -42,20 +55,11 @@ namespace Hatchit {
             GetAsSockAddrIn()->sin_port = htons(port);
         }
 
-        SocketAddress::SocketAddress()
-        {
-            GetAsSockAddrIn()->sin_family = AF_INET;
-            GetIPv4Ref() = INADDR_ANY;
-            GetAsSockAddrIn()->sin_port = 0;
-        }
+
 
         SocketAddress::SocketAddress(const sockaddr& sockAddr)
         {
-#ifdef HT_SYS_WINDOWS
-            memcpy_s(&m_sockAddr, sizeof(sockaddr), &sockAddr, sizeof(sockaddr));
-#else
             std::memcpy(&m_sockAddr, &sockAddr, sizeof(sockaddr));
-#endif
         }
 
         bool SocketAddress::operator== (const SocketAddress& other) const

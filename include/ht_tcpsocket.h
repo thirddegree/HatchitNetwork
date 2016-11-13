@@ -30,6 +30,8 @@ namespace Hatchit {
         class HT_API TCPSocket
         {
         public:
+            TCPSocket();
+            TCPSocket(SOCKET socket);
             ~TCPSocket();
 
             int                         Connect(const SocketAddress& address);
@@ -40,8 +42,6 @@ namespace Hatchit {
             int                         Receive(void* buffer, int len);
         private:
             SOCKET m_socket;
-        
-            TCPSocket(SOCKET socket);
 
             friend class SocketUtil;
         };

@@ -26,10 +26,11 @@ namespace Hatchit {
         class HT_API SocketAddress
         {
         public:
+            SocketAddress();
+            SocketAddress(const char* address, uint16_t port);
             SocketAddress(hostent* host, uint16_t port);
             SocketAddress(uint32_t address, uint16_t port);
             SocketAddress(uint16_t port);
-            SocketAddress();
             SocketAddress(const sockaddr& sockAddr);
 
             size_t GetSize() const;
