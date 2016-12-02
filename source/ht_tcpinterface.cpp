@@ -88,7 +88,7 @@ namespace Hatchit
             /**
              * Clear all contained shared memory
              */
-            m_clients.clear();
+            //m_clients.clear();
         }
 
         void TCPInterface::AttachPlugin(std::shared_ptr<TCPProcessPlugin> &plugin)
